@@ -5,7 +5,7 @@ with us from the **`franks_cdl`** share on the
 [e2-demo-field-eng](https://e2-demo-field-eng.cloud.databricks.com/explore/sharing/shares/franks_cdl?o=1444828305810485)
 Databricks workspace.
 
-Delta Sharing / Open Sharing is an open protocol for secure data sharing. We connect as an
+Delta Sharing/Open Sharing is an open protocol for secure data sharing. We connect as an
 **open (token-based) recipient**: Databricks gives the recipient an *activation
 link*, which downloads a credential file (`config.share`) containing the sharing
 server endpoint and a bearer token. The client reads that file — no Databricks
