@@ -39,6 +39,10 @@ account required on our side.
 > [Setup](#setup) below. Run the SQL in a Unity Catalog–enabled workspace as a
 > user with the `CREATE SHARE` / `CREATE RECIPIENT` metastore privileges.
 
+> **Note:** the screenshots below were captured from an earlier iteration when the
+> share was named `jnj-butterfly-share`. The current share is `franks_cdl` — the
+> steps are identical.
+
 1. **Create the share:**
 
    ```sql
@@ -59,6 +63,16 @@ account required on our side.
    ALTER SHARE franks_cdl ADD TABLE ai_agent.customers WITH HISTORY;
    ```
 
+   <img src="images/2.png" alt="Edit assets picker" width="800">
+
+   *In the UI, **Manage assets → Edit assets** lets you pick tables from a
+   catalog/schema tree, set an alias, and toggle History per table.*
+
+   <img src="images/1.png" alt="Share overview" width="800">
+
+   *The share's **Overview** tab then lists each added asset (here
+   `ai_agent.customers`, with History enabled).*
+
 3. **Create the open (token-based) recipient:**
 
    ```sql
@@ -75,6 +89,11 @@ account required on our side.
    (You can also do all of this in Catalog Explorer → **Delta Sharing** →
    **Shared by me** and **Recipients**.)
 
+   <img src="images/3.png" alt="Create a new recipient dialog" width="800">
+
+   *The **Add recipient** dialog: create an **Open** recipient authenticated by a
+   Databricks-generated **Token**, with an optional token lifetime.*
+
 4. **Grant the recipient access to the share:**
 
    ```sql
@@ -87,6 +106,12 @@ account required on our side.
    ```sql
    ALTER RECIPIENT bobertx3_local ROTATE TOKEN;
    ```
+
+   <img src="images/4.png" alt="Recipient overview and token management" width="800">
+
+   *The recipient's page shows its granted shares, authentication type, and
+   **Token management** — where the activation link lives and where you **Rotate**
+   or **Update** the token.*
 
 ## Setup
 
@@ -115,6 +140,12 @@ python3 -m venv .venv
 ./.venv/bin/python -m pip install jupyter ipykernel delta-sharing pandas pyarrow
 ./.venv/bin/jupyter notebook delta_sharing_client.ipynb
 ```
+
+<img src="images/5.png" alt="The client notebook running in an IDE" width="800">
+
+*The client notebook (`delta_sharing_client.ipynb`): a `%pip install` cell, then
+connect with `SharingClient`, enumerate tables via `list_all_tables()`, and load
+one into pandas with `load_as_pandas()`.*
 
 ## How reading a table works
 
