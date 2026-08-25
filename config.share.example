@@ -1,0 +1,7 @@
+{
+  "shareCredentialsVersion": 1,
+  "bearerToken": "<YOUR_BEARER_TOKEN>",
+  "endpoint": "https://<workspace-host>/api/2.0/delta-sharing/metastores/<metastore-id>",
+  "expirationTime": "<YYYY-MM-DDTHH:MM:SS.sssZ>",
+  "icebergEndpoint": "https://<workspace-host>/api/2.0/delta-sharing/metastores/<metastore-id>/iceberg"
+}

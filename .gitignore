@@ -1,0 +1,17 @@
+# Delta Sharing credentials — NEVER commit these (contain a bearer token)
+*.share
+config.share*
+*.bkup
+# ...but keep the placeholder template
+!config.share.example
+
+# Python virtual environment
+.venv/
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# macOS
+.DS_Store
