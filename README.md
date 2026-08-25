@@ -19,6 +19,11 @@ account required on our side.
 | **Share** | [`franks_cdl`](https://e2-demo-field-eng.cloud.databricks.com/explore/sharing/shares/franks_cdl?o=1444828305810485) |
 | **Tables** | `ai_agent.customers`, `ai_agent.billing` (and any others added to the share) |
 
+> The `endpoint` inside your `config.share` points at the **regional Delta Sharing
+> serving host** (e.g. `oregon.cloud.databricks.com`) that fronts this workspace's
+> metastore — that's expected and not a different workspace. `e2-demo-field-eng`
+> above is the browsable workspace where the share is managed.
+
 ## What's in here
 
 | File | Purpose |
