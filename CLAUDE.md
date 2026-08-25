@@ -5,8 +5,9 @@ Guidance for Claude Code when working in this repo.
 ## What this project is
 
 A minimal **Delta Sharing client**. It reads data that was shared with us through
-the `jnj-butterfly-share` Delta Share (open / token-based recipient
-`bobertx3_local`). The primary asset is the `ai_agent.customers` table.
+the `franks_cdl` Delta Share (open / token-based recipient
+`bobertx3_local`). The shared assets are the `ai_agent.customers` and
+`ai_agent.billing` tables.
 
 This is a *consumer* of shared data — there is no Spark cluster or Databricks
 workspace dependency on our side. Everything runs locally against the Delta
@@ -18,7 +19,7 @@ Sharing REST endpoint using the `delta-sharing` Python library.
   `endpoint` + `bearerToken`) authenticates the client. It is downloaded once from
   the recipient's activation link in Databricks.
 - **Table addressing:** `delta-sharing` uses `<profile>#<share>.<schema>.<table>`.
-  Our target is `config.share#jnj-butterfly-share.ai_agent.customers`.
+  Our target is `config.share#franks_cdl.ai_agent.customers`.
 - **Entry point:** `delta_sharing_client.ipynb` (kernel: "Python (jnj-deltashare)").
 - **Dependencies:** installed via `%pip` in the notebook (`delta-sharing`, `pandas`, `pyarrow`). Optional `.venv/` for local Jupyter.
 

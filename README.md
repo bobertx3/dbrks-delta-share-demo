@@ -27,6 +27,62 @@ account required on our side.
 | `config.share` | **Your credential file — not committed.** You must add this yourself (see below). |
 | `.gitignore` | Keeps `*.share` and the venv out of git. |
 
+## Provider-side setup (creating the share)
+
+> This is the **data provider's** side — done once in the Databricks workspace
+> that owns the data. If you're only *consuming* an existing share, skip to
+> [Setup](#setup) below. Run the SQL in a Unity Catalog–enabled workspace as a
+> user with the `CREATE SHARE` / `CREATE RECIPIENT` metastore privileges.
+
+1. **Create the share:**
+
+   ```sql
+   CREATE SHARE IF NOT EXISTS franks_cdl
+     COMMENT 'CDL demo data shared via Delta Sharing';
+   ```
+
+2. **Add tables to the share** (schema-qualified from a Unity Catalog catalog):
+
+   ```sql
+   ALTER SHARE franks_cdl ADD TABLE ai_agent.customers;
+   ALTER SHARE franks_cdl ADD TABLE ai_agent.billing;
+   ```
+
+   Optionally enable history so recipients can time-travel:
+
+   ```sql
+   ALTER SHARE franks_cdl ADD TABLE ai_agent.customers WITH HISTORY;
+   ```
+
+3. **Create the open (token-based) recipient:**
+
+   ```sql
+   CREATE RECIPIENT IF NOT EXISTS bobertx3_local
+     COMMENT 'Open recipient for local Delta Sharing client';
+   ```
+
+   This mints a single-use **activation link**. Retrieve it with:
+
+   ```sql
+   DESCRIBE RECIPIENT bobertx3_local;   -- see activation_link + token expiry
+   ```
+
+   (You can also do all of this in Catalog Explorer → **Delta Sharing** →
+   **Shared by me** and **Recipients**.)
+
+4. **Grant the recipient access to the share:**
+
+   ```sql
+   GRANT SELECT ON SHARE franks_cdl TO RECIPIENT bobertx3_local;
+   ```
+
+5. **Send the activation link** to the recipient. They download `config.share`
+   from it (step 1 below). To rotate a lost/expired token:
+
+   ```sql
+   ALTER RECIPIENT bobertx3_local ROTATE TOKEN;
+   ```
+
 ## Setup
 
 ### 1. Get the credential file
